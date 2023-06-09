@@ -10,12 +10,7 @@ var pieceType: String
 var colourString: String
 
 func _ready():
-	pieceType = name.left(-2).trim_prefix("White").trim_prefix("Black")
 	colourString = name.left(5)
-
-# Called when the node enters the scene tree for the first time.
-func on_piece_move():
-	pass
 
 func _process(_delta):
 	if canDrag:
@@ -24,6 +19,22 @@ func _process(_delta):
 func piece_to_be_destoyed_name():
 	return (Globals.int_to_colour[Globals.current_chess_board[chessBoardCords.y][chessBoardCords.x][0]]+Globals.int_to_piece[Globals.current_chess_board[chessBoardCords.y][chessBoardCords.x][1]]+Globals.cordsToSnapTo)
 	
+func get_possible_moves(pieceName, board, castlingRights):
+	pieceType = name.left(-2).trim_prefix("White").trim_prefix("Black")
+	match pieceType:
+		"Pawn":
+			return PossibleMoves.pawn(get_meta("cords"), board, Globals.colour_to_int[name.left(5)])
+		"Knight":
+			return PossibleMoves.knight(get_meta("cords"), board, Globals.colour_to_int[name.left(5)])
+		"King":
+			return PossibleMoves.king(get_meta("cords"), board, Globals.colour_to_int[name.left(5)], castlingRights)
+		"Rook":
+			return PossibleMoves.rook(get_meta("cords"), board, Globals.colour_to_int[name.left(5)])
+		"Bishop":
+			return PossibleMoves.bishop(get_meta("cords"), board, Globals.colour_to_int[name.left(5)])
+		"Queen":
+			return PossibleMoves.queen(get_meta("cords"), board, Globals.colour_to_int[name.left(5)])
+
 func _on_button_up():
 	# await _input for snapping before we "drop" the piece
 	await("SnapComplete")
@@ -41,22 +52,10 @@ func _on_button_up():
 			var possibleMovesArray: Array
 			
 			# is move in list of possible moves
-			match pieceType:
-				"Pawn":
-					possibleMovesArray = PossibleMoves.pawn(get_meta("cords"), Globals.current_chess_board, Globals.colour_to_int[name.left(5)])
-				"Knight":
-					possibleMovesArray = PossibleMoves.knight(get_meta("cords"), Globals.current_chess_board, Globals.colour_to_int[name.left(5)])
-				"King":
-					possibleMovesArray = PossibleMoves.king(get_meta("cords"), Globals.current_chess_board, Globals.colour_to_int[name.left(5)], Globals.castlingRights)
-				"Rook":
-					possibleMovesArray = PossibleMoves.rook(get_meta("cords"), Globals.current_chess_board, Globals.colour_to_int[name.left(5)])
-				"Bishop":
-					possibleMovesArray = PossibleMoves.bishop(get_meta("cords"), Globals.current_chess_board, Globals.colour_to_int[name.left(5)])
-				"Queen":
-					possibleMovesArray = PossibleMoves.queen(get_meta("cords"), Globals.current_chess_board, Globals.colour_to_int[name.left(5)])
-					
+			possibleMovesArray = get_possible_moves(name, Globals.current_chess_board, Globals.castlingRights)
+			
 			if not Globals.cordsToSnapTo in possibleMovesArray:
-				if Globals.cordsToSnapTo == get_meta("cords"): #if trying to move to same position as where you started
+				if Globals.cordsToSnapTo == get_meta("cords"): # if trying to move to same position as where you started
 					print("Cant move there, you can only move to", possibleMovesArray)
 					# TODO add in some visual way of seeing where you can move 
 				else:
@@ -108,10 +107,10 @@ func _on_button_up():
 
 			# swap turns
 			if Globals.turn == "White":
-				print("Black's turn - ", str(snapped(Globals.black_time_current, 0.01)), " seconds left")
+				print("Black's turn - ", str("%.1f" % Globals.black_time_current), " seconds left")
 				Globals.turn = "Black"
 			elif Globals.turn == "Black":
-				print("White's turn - ", str(snapped(Globals.white_time_current, 0.01)), " seconds left")
+				print("White's turn - ", str("%.1f" % Globals.white_time_current), " seconds left")
 				Globals.turn = "White"
 					
 			# print debug info
