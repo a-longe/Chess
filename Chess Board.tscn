@@ -1,0 +1,1118 @@
+[gd_scene load_steps=32 format=3 uid="uid://dpei8h8ucrg0p"]
+
+[ext_resource type="PackedScene" uid="uid://bh2a2oy2g6hhs" path="res://piece.tscn" id="1_2my0d"]
+[ext_resource type="Script" path="res://dragAndDrop.gd" id="1_aolvc"]
+[ext_resource type="Script" path="res://chessBoard.gd" id="2_3nkvx"]
+[ext_resource type="Texture2D" uid="uid://b113pk2tv72hl" path="res://Chess Pieces Images/BlackPawn.png" id="2_aq0fl"]
+[ext_resource type="Script" path="res://possibleMoves.gd" id="3_eo41o"]
+[ext_resource type="Texture2D" uid="uid://jdryrr4emcse" path="res://Chess Pieces Images/WhitePawn.png" id="3_rlm0l"]
+[ext_resource type="Texture2D" uid="uid://bc7iqxnub1mjn" path="res://Chess Pieces Images/BlackRook.png" id="4_cv1w5"]
+[ext_resource type="Texture2D" uid="uid://rjv5c82rvcut" path="res://Chess Pieces Images/BlackBishop.png" id="5_ponsv"]
+[ext_resource type="Texture2D" uid="uid://dymgnv67m4wfx" path="res://Chess Pieces Images/BlackKnight.png" id="6_pyhuy"]
+[ext_resource type="Texture2D" uid="uid://5a2bxasii2ev" path="res://Chess Pieces Images/BlackQueen.png" id="7_i3td2"]
+[ext_resource type="Texture2D" uid="uid://by587ugwkxxil" path="res://Chess Pieces Images/BlackKing.png" id="8_7dkuj"]
+[ext_resource type="Texture2D" uid="uid://bqikai8ndrevw" path="res://Chess Pieces Images/WhiteRook.png" id="9_t4x7w"]
+[ext_resource type="Texture2D" uid="uid://b0u2skn3oynog" path="res://Chess Pieces Images/WhiteBishop.png" id="10_5uha1"]
+[ext_resource type="Texture2D" uid="uid://8bx5rfavp5v6" path="res://Chess Pieces Images/WhiteKnight.png" id="11_hntqg"]
+[ext_resource type="Texture2D" uid="uid://xja5vbkipxhu" path="res://Chess Pieces Images/WhiteQueen.png" id="12_l6365"]
+[ext_resource type="Texture2D" uid="uid://d2h6sssd7gfv4" path="res://Chess Pieces Images/WhiteKing.png" id="13_wo58n"]
+[ext_resource type="Script" path="res://timer.gd" id="14_km223"]
+[ext_resource type="Script" path="res://promotion.gd" id="18_fockv"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_00xn6"]
+
+[sub_resource type="Gradient" id="Gradient_0v742"]
+colors = PackedColorArray(0.129412, 0.129412, 0.129412, 1, 0.129412, 0.129412, 0.129412, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_abwyo"]
+gradient = SubResource("Gradient_0v742")
+
+[sub_resource type="QuadMesh" id="QuadMesh_1iogc"]
+
+[sub_resource type="Gradient" id="Gradient_ysr2b"]
+offsets = PackedFloat32Array(0, 0.986726, 0.995575, 1)
+colors = PackedColorArray(0.243137, 0.321569, 0.243137, 1, 0.243137, 0.321569, 0.243137, 1, 1, 1, 1, 1, 0.243137, 0.321569, 0.243137, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ep26"]
+gradient = SubResource("Gradient_ysr2b")
+
+[sub_resource type="QuadMesh" id="QuadMesh_dn8em"]
+
+[sub_resource type="Gradient" id="Gradient_mm3ln"]
+colors = PackedColorArray(0.854902, 0.85098, 0.709804, 1, 0.854902, 0.85098, 0.709804, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mjho0"]
+gradient = SubResource("Gradient_mm3ln")
+
+[sub_resource type="Gradient" id="Gradient_i0ykf"]
+colors = PackedColorArray(0.262745, 0.290196, 0.227451, 1, 0.262745, 0.290196, 0.227451, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_a2j50"]
+gradient = SubResource("Gradient_i0ykf")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ey6yj"]
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_ph3ko"]
+font_size = 40
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BoardCamera" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(1.135, 1.135)
+
+[node name="Background" type="MeshInstance2D" parent="."]
+show_behind_parent = true
+position = Vector2(516, 295)
+scale = Vector2(1153, 674)
+mesh = SubResource("QuadMesh_00xn6")
+texture = SubResource("GradientTexture1D_abwyo")
+
+[node name="Board Settings" type="Node2D" parent="."]
+metadata/dark_square_colour = Color(0.262745, 0.290196, 0.227451, 1)
+metadata/light_square_colour = Color(0.854902, 0.85098, 0.709804, 1)
+
+[node name="boardSquares" type="Node2D" parent="."]
+script = ExtResource("1_aolvc")
+metadata/boardState = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+[node name="Square - A1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_1iogc")
+texture = SubResource("GradientTexture1D_0ep26")
+
+[node name="Square - A2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - A3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - A4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - A5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - A6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - A7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - A8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(232.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - B1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - B2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - B3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - B4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - B5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - B6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - B7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - B8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(296.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - C1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - C2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - C3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - C4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - C5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - C6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - C7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - C8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(360.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - D1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - D2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - D3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - D4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - D5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - D6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - D7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - D8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(424.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - E1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - E2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - E3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - E4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - E5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - E6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - E7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - E8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(488.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - F1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - F2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - F3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - F4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - F5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - F6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - F7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - F8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(552.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - G1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - G2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - G3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - G4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - G5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - G6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - G7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - G8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(616.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - H1" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 504)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - H2" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 440)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - H3" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 376)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - H4" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 312)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - H5" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 248)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - H6" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 184)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="Square - H7" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 120)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_mjho0")
+
+[node name="Square - H8" type="MeshInstance2D" parent="boardSquares"]
+visibility_layer = 4
+position = Vector2(680.001, 56)
+scale = Vector2(64, 64)
+mesh = SubResource("QuadMesh_dn8em")
+texture = SubResource("GradientTexture1D_a2j50")
+
+[node name="chessBoard" type="Node2D" parent="."]
+script = ExtResource("2_3nkvx")
+
+[node name="Labels" type="Node" parent="."]
+
+[node name="Row" type="Node" parent="Labels"]
+
+[node name="LabelRow8" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 177.0
+offset_top = 43.0
+offset_right = 191.0
+offset_bottom = 66.0
+text = "8"
+
+[node name="LabelRow7" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 179.0
+offset_top = 107.0
+offset_right = 192.0
+offset_bottom = 130.0
+text = "7"
+
+[node name="LabelRow6" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 180.0
+offset_top = 169.0
+offset_right = 193.0
+offset_bottom = 192.0
+text = "6"
+
+[node name="LabelRow5" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 180.0
+offset_top = 235.0
+offset_right = 193.0
+offset_bottom = 258.0
+text = "5"
+
+[node name="LabelRow4" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 180.0
+offset_top = 299.0
+offset_right = 193.0
+offset_bottom = 322.0
+text = "4"
+
+[node name="LabelRow3" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 178.0
+offset_top = 361.0
+offset_right = 191.0
+offset_bottom = 384.0
+text = "3"
+
+[node name="LabelRow2" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 177.0
+offset_top = 427.0
+offset_right = 192.0
+offset_bottom = 450.0
+text = "2"
+
+[node name="LabelRow1" type="RichTextLabel" parent="Labels/Row"]
+offset_left = 175.0
+offset_top = 497.0
+offset_right = 190.0
+offset_bottom = 520.0
+text = "1"
+
+[node name="Column" type="Node" parent="Labels"]
+
+[node name="LabelColumnA" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 226.0
+offset_top = 535.0
+offset_right = 240.0
+offset_bottom = 558.0
+text = "a"
+
+[node name="LabelColumnB" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 292.0
+offset_top = 535.0
+offset_right = 306.0
+offset_bottom = 558.0
+text = "b"
+
+[node name="LabelColumnC" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 355.0
+offset_top = 534.0
+offset_right = 369.0
+offset_bottom = 557.0
+text = "c"
+
+[node name="LabelColumnD" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 418.0
+offset_top = 534.0
+offset_right = 432.0
+offset_bottom = 557.0
+text = "d"
+
+[node name="LabelColumnE" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 483.0
+offset_top = 534.0
+offset_right = 497.0
+offset_bottom = 557.0
+text = "e"
+
+[node name="LabelColumnF" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 547.0
+offset_top = 534.0
+offset_right = 561.0
+offset_bottom = 557.0
+text = "f"
+
+[node name="LabelColumnG" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 614.0
+offset_top = 535.0
+offset_right = 628.0
+offset_bottom = 558.0
+text = "g"
+
+[node name="LabelColumnH" type="RichTextLabel" parent="Labels/Column"]
+offset_left = 678.0
+offset_top = 535.0
+offset_right = 692.0
+offset_bottom = 558.0
+text = "h"
+
+[node name="Pieces" type="Node" parent="."]
+script = ExtResource("3_eo41o")
+
+[node name="BlackPawnA7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 200.0
+offset_top = 88.0
+offset_right = 264.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "A7"
+
+[node name="BlackPawnC7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 328.0
+offset_top = 88.0
+offset_right = 392.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "C7"
+
+[node name="BlackPawnB7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 264.0
+offset_top = 88.0
+offset_right = 328.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "B7"
+
+[node name="BlackPawnD7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 392.0
+offset_top = 88.0
+offset_right = 456.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "D7"
+
+[node name="BlackPawnF7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 520.0
+offset_top = 88.0
+offset_right = 584.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "F7"
+
+[node name="BlackPawnE7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 456.0
+offset_top = 88.0
+offset_right = 520.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "E7"
+
+[node name="BlackPawnH7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 648.0
+offset_top = 88.0
+offset_right = 712.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "H7"
+
+[node name="BlackPawnG7" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 584.0
+offset_top = 88.0
+offset_right = 648.0
+offset_bottom = 152.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("2_aq0fl")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "G7"
+
+[node name="WhitePawnA2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 200.0
+offset_top = 408.0
+offset_right = 264.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "A2"
+
+[node name="WhitePawnC2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 328.0
+offset_top = 408.0
+offset_right = 392.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "C2"
+
+[node name="WhitePawnB2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 264.0
+offset_top = 408.0
+offset_right = 328.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "B2"
+
+[node name="WhitePawnD2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 392.0
+offset_top = 408.0
+offset_right = 456.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "D2"
+
+[node name="WhitePawnF2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 520.0
+offset_top = 408.0
+offset_right = 584.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "F2"
+
+[node name="WhitePawnE2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 456.0
+offset_top = 408.0
+offset_right = 520.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "E2"
+
+[node name="WhitePawnH2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 648.0
+offset_top = 408.0
+offset_right = 712.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "H2"
+
+[node name="WhitePawnG2" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 584.0
+offset_top = 408.0
+offset_right = 648.0
+offset_bottom = 472.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("3_rlm0l")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "G2"
+
+[node name="BlackRookA8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 200.0
+offset_top = 24.0
+offset_right = 264.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("4_cv1w5")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "A8"
+
+[node name="BlackBishopC8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 328.0
+offset_top = 24.0
+offset_right = 392.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("5_ponsv")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "C8"
+
+[node name="BlackKnightB8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 264.0
+offset_top = 24.0
+offset_right = 328.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("6_pyhuy")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "B8"
+
+[node name="BlackQueenD8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 392.0
+offset_top = 24.0
+offset_right = 456.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("7_i3td2")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "D8"
+
+[node name="BlackBishopF8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 520.0
+offset_top = 24.0
+offset_right = 584.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("5_ponsv")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "F8"
+
+[node name="BlackKingE8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 456.0
+offset_top = 24.0
+offset_right = 520.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("8_7dkuj")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "E8"
+
+[node name="BlackRookH8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 648.0
+offset_top = 24.0
+offset_right = 712.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("4_cv1w5")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "H8"
+
+[node name="BlackKnightG8" parent="Pieces" groups=["black"] instance=ExtResource("1_2my0d")]
+offset_left = 584.0
+offset_top = 24.0
+offset_right = 648.0
+offset_bottom = 88.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("6_pyhuy")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "G8"
+
+[node name="WhiteRookA1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 200.0
+offset_top = 472.0
+offset_right = 264.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("9_t4x7w")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "A1"
+
+[node name="WhiteBishopC1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 328.0
+offset_top = 472.0
+offset_right = 392.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("10_5uha1")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "C1"
+
+[node name="WhiteKnightB1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 264.0
+offset_top = 472.0
+offset_right = 328.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("11_hntqg")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "B1"
+
+[node name="WhiteQueenD1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 392.0
+offset_top = 472.0
+offset_right = 456.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("12_l6365")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "D1"
+
+[node name="WhiteBishopF1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 520.0
+offset_top = 472.0
+offset_right = 584.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("10_5uha1")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "F1"
+
+[node name="WhiteKingE1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 456.0
+offset_top = 472.0
+offset_right = 520.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("13_wo58n")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "E1"
+
+[node name="WhiteRookH1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 648.0
+offset_top = 472.0
+offset_right = 712.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("9_t4x7w")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "H1"
+
+[node name="WhiteKnightG1" parent="Pieces" groups=["white"] instance=ExtResource("1_2my0d")]
+offset_left = 584.0
+offset_top = 472.0
+offset_right = 648.0
+offset_bottom = 536.0
+focus_mode = 0
+keep_pressed_outside = false
+icon = ExtResource("11_hntqg")
+icon_alignment = 1
+expand_icon = true
+metadata/cords = "G1"
+
+[node name="BlackTimer" type="Label" parent="."]
+offset_left = 813.0
+offset_top = 157.0
+offset_right = 882.0
+offset_bottom = 215.0
+text = "600"
+label_settings = SubResource("LabelSettings_ey6yj")
+script = ExtResource("14_km223")
+
+[node name="WhiteTimer" type="Label" parent="."]
+offset_left = 814.0
+offset_top = 345.0
+offset_right = 883.0
+offset_bottom = 403.0
+text = "600"
+label_settings = SubResource("LabelSettings_ph3ko")
+script = ExtResource("14_km223")
+
+[node name="PromotionGUI" type="Node" parent="."]
+script = ExtResource("18_fockv")
+
+[node name="WhitePromotionGUI" type="PopupMenu" parent="PromotionGUI"]
+transparent_bg = true
+title = "Promotion Decision"
+size = Vector2i(191, 291)
+always_on_top = true
+content_scale_mode = 1
+content_scale_aspect = 4
+hide_on_item_selection = false
+hide_on_checkable_item_selection = false
+allow_search = false
+item_count = 5
+item_0/text = "Promotion"
+item_0/id = 0
+item_0/disabled = true
+item_0/separator = true
+item_1/text = "Queen"
+item_1/icon = ExtResource("12_l6365")
+item_1/checkable = 2
+item_1/id = 1
+item_2/text = "Rook"
+item_2/icon = ExtResource("9_t4x7w")
+item_2/checkable = 2
+item_2/id = 2
+item_3/text = "Bishop"
+item_3/icon = ExtResource("10_5uha1")
+item_3/checkable = 2
+item_3/id = 3
+item_4/text = "Knight"
+item_4/icon = ExtResource("11_hntqg")
+item_4/checkable = 2
+item_4/id = 4
+
+[node name="BlackPromotionGUI" type="PopupMenu" parent="PromotionGUI"]
+transparent_bg = true
+title = "Promotion Decision"
+size = Vector2i(191, 291)
+always_on_top = true
+transparent = true
+content_scale_aspect = 4
+item_count = 5
+item_0/text = "Promotion"
+item_0/id = 0
+item_0/separator = true
+item_1/text = "Queen"
+item_1/icon = ExtResource("7_i3td2")
+item_1/checkable = 2
+item_1/id = 1
+item_2/text = "Rook"
+item_2/icon = ExtResource("4_cv1w5")
+item_2/checkable = 2
+item_2/id = 2
+item_3/text = "Bishop"
+item_3/icon = ExtResource("5_ponsv")
+item_3/checkable = 2
+item_3/id = 3
+item_4/text = "Knight"
+item_4/icon = ExtResource("6_pyhuy")
+item_4/checkable = 2
+item_4/id = 4
+
+[connection signal="id_pressed" from="PromotionGUI/WhitePromotionGUI" to="PromotionGUI" method="_on_white_promotion_gui_id_pressed"]
+[connection signal="id_pressed" from="PromotionGUI/BlackPromotionGUI" to="PromotionGUI" method="_on_black_promotion_gui_id_pressed"]

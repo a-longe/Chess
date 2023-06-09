@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://fj6lk6epswtc"]
+
+[ext_resource type="FontFile" uid="uid://dkheqv10ncmr0" path="res://Fonts/Montserrat-Medium.ttf" id="1_8ywuv"]
+[ext_resource type="Script" path="res://startButton.gd" id="2_mki45"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_uhwlu"]
+
+[sub_resource type="Gradient" id="Gradient_0v742"]
+colors = PackedColorArray(0.129412, 0.129412, 0.129412, 1, 0.129412, 0.129412, 0.129412, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i4qyu"]
+gradient = SubResource("Gradient_0v742")
+
+[sub_resource type="LabelSettings" id="LabelSettings_uh5gv"]
+font = ExtResource("1_8ywuv")
+font_size = 88
+
+[sub_resource type="Gradient" id="Gradient_lqki0"]
+colors = PackedColorArray(0.262932, 0.262932, 0.262932, 1, 0.298039, 0.298039, 0.298039, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mfyxk"]
+gradient = SubResource("Gradient_lqki0")
+width = 256
+fill_from = Vector2(0, 1)
+fill_to = Vector2(1, 1)
+repeat = 1
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Background" type="MeshInstance2D" parent="."]
+show_behind_parent = true
+position = Vector2(-2, 7)
+scale = Vector2(1166.75, 674)
+mesh = SubResource("QuadMesh_uhwlu")
+texture = SubResource("GradientTexture1D_i4qyu")
+
+[node name="titleLabel" type="Label" parent="."]
+offset_left = -130.0
+offset_top = -198.0
+offset_right = 131.0
+offset_bottom = -74.0
+text = "Chess"
+label_settings = SubResource("LabelSettings_uh5gv")
+
+[node name="startButton" type="Button" parent="."]
+offset_left = -135.0
+offset_top = 93.0
+offset_right = 135.0
+offset_bottom = 167.0
+text = "START"
+icon = SubResource("GradientTexture2D_mfyxk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_mki45")
+
+[connection signal="pressed" from="startButton" to="startButton" method="_on_pressed"]
